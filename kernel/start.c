@@ -13,17 +13,17 @@ void timerinit()
     int interval = 1000000;  // 触发间隔（周期），QEMU下约为0.1秒
 
     // 设置CLINT，安排首次计时器中断:contentReference[oaicite:8]{index=8}
-    *(uint_64*)CLINT_MTIMECMP(id) = *(uint_64*)CLINT_MTIME + interval;
+    *(u64*)CLINT_MTIMECMP(id) = *(u64*)CLINT_MTIME + interval;
 
     // 配置mscratch指向的scratch信息：
     // scratch[0..3]用于保存a0–a3，scratch[4]放CLINT_MTIMECMP地址，scratch[5]放计时器间隔
-    uint_64 *scratch = &mscratch0[32 * id];
+    u64 *scratch = &mscratch0[32 * id];
     scratch[4] = CLINT_MTIMECMP(id);
     scratch[5] = interval;
-    w_mscratch((uint_64)scratch);
+    w_mscratch((u64)scratch);
 
     // 设置机器态中断向量入口为timervec
-    w_mtvec((uint_64)timervec);
+    w_mtvec((u64)timervec);
     // 开启机器态计时器中断和全局中断使能
     w_mie(r_mie() | MIE_MTIE);
     w_mstatus(r_mstatus() | MSTATUS_MIE);

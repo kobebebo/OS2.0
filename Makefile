@@ -1,4 +1,6 @@
 # riscv-os / Makefile
+QEMU  ?= qemu-system-riscv64
+QFLAGS?= -machine virt -m 128M -smp 1 -nographic -bios none
 CROSS      ?= riscv64-unknown-elf-
 CC         := $(CROSS)gcc
 LD         := $(CROSS)ld

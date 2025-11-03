@@ -6,6 +6,7 @@ void main(void) {
   printf("Hello OS from riscv-os (Experiment 1)\n");
 
   /* 页表与 Sv39（Exp3） */
+  printf("[INFO] Initializing physical page allocator (takes a moment) ...\n");
   kinit();
   kvminit();
   kvminithart();
